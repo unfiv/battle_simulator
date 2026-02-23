@@ -10,6 +10,8 @@
 #include "Core/Map.hpp"
 #include "Core/Registry/RestrictionsRegistry.hpp"
 
+#include "Core/Pipeline/IntentResolver.hpp"
+
 namespace sw::core::io
 {
     class EventSystem;
@@ -33,6 +35,7 @@ namespace sw::core
         io::EventSystem& getEvents() { return eventSystem; }
 
         Map map{0, 0};
+        pipeline::IntentResolver resolver;
 
         std::vector<System> systems;
 
@@ -41,6 +44,11 @@ namespace sw::core
         std::unordered_map<uint32_t, Position> targetPositions;
         
         registry::RestrictionsRegistry restrictions;
+
+        void pushIntent(std::shared_ptr<pipeline::Intent> intent)
+        {
+            resolver.resolve(*this, intent);
+        }
 
         template<typename T>
         std::unordered_map<uint32_t, T>& getComponent()
