@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace sw::core
+namespace sw::core::domain
 {
     struct Position
     {

@@ -5,6 +5,8 @@
 #include "Core/IO/CommandParser.hpp"
 #include "Core/Commands/CommandRegistry.hpp"
 
+#include "Features/Domain/Position.hpp"
+#include "Features/Domain/PositionOccupier.hpp"
 #include "Features/Domain/Health.hpp"
 #include "Features/Domain/Melee.hpp"
 #include "Features/Domain/Ranged.hpp"
@@ -17,8 +19,10 @@ namespace sw::features::commands
 {
     void SpawnHunter::execute(core::World& world) const
     {
-        core::UnitManager::spawn(world, unitId, "hunter", {x, y}, [&]()
+        core::UnitManager::spawn(world, unitId, "hunter", [&]()
         {
+            world.getComponent<domain::Position>()[unitId] = { x, y };
+            world.getComponent<domain::PositionOccupier>()[unitId];
             world.getComponent<domain::Health>()[unitId] = { hp };
             world.getComponent<domain::Melee>()[unitId] = { strength };
             world.getComponent<domain::Ranged>()[unitId] = { agility, range };

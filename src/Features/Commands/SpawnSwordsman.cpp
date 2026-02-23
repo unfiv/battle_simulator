@@ -5,6 +5,8 @@
 #include "Core/IO/CommandParser.hpp"
 #include "Core/Commands/CommandRegistry.hpp"
 
+#include "Features/Domain/Position.hpp"
+#include "Features/Domain/PositionOccupier.hpp"
 #include "Features/Domain/Health.hpp"
 #include "Features/Domain/Melee.hpp"
 #include "Features/Domain/RendingAbility.hpp"
@@ -15,8 +17,10 @@ namespace sw::features::commands
 {
     void SpawnSwordsman::execute(core::World& world) const
     {
-        core::UnitManager::spawn(world, unitId, "swordsman", {x, y}, [&]()
+        core::UnitManager::spawn(world, unitId, "swordsman", [&]()
         {
+            world.getComponent<domain::Position>()[unitId] = { x, y };
+            world.getComponent<domain::PositionOccupier>()[unitId];
             world.getComponent<domain::Health>()[unitId] = { hp };
             world.getComponent<domain::Melee>()[unitId] = { strength };
             world.getComponent<domain::RendingAbility>()[unitId] = { chance, rending };

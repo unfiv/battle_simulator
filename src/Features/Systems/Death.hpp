@@ -37,15 +37,7 @@ namespace sw::features::systems
 	private:
         static void destroy(core::World& world, uint32_t id)
         {
-            core::UnitManager::destroy(world, id, [&](uint32_t targetId)
-            {
-                world.getComponent<domain::Health>().erase(targetId);
-                world.getComponent<domain::Melee>().erase(targetId);
-                world.getComponent<domain::RendingAbility>().erase(targetId);
-                world.getComponent<domain::Ranged>().erase(targetId);
-                world.getComponent<domain::PoisonAbility>().erase(targetId);
-                world.getComponent<domain::effects::EffectList>().erase(targetId);
-            });
+            core::UnitManager::destroy(world, id, [&](uint32_t targetId) {});
         }
     };
 }

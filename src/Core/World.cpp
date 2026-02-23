@@ -2,6 +2,9 @@
 
 #include <array>
 #include <span>
+#include <cassert>
+
+#include "Core/Domain/Position.hpp"
 
 #include "Features/Intents/DeathIntent.hpp"
 #include "Features/Intents/EffectsTickIntent.hpp"
@@ -46,17 +49,10 @@ namespace sw::core
 
         for (uint32_t id : ids)
         {
-            if (positions.find(id) == positions.end())
-            {
-                continue;
-            }
+            // Sanity check as Position component is fundamental for the unit's existence
+            assert(getComponent<domain::Position>().find(id) != getComponent<domain::Position>().end());
 
             executeChain(id, maintenanceChain, false);
-
-            if (positions.find(id) == positions.end())
-            {
-                continue;
-            }
 
             auto chainIt = intentsChains.find(id);
             if (chainIt == intentsChains.end())
@@ -69,10 +65,8 @@ namespace sw::core
 
         for (uint32_t id : ids)
         {
-            if (positions.find(id) == positions.end())
-            {
-                continue;
-            }
+            // Sanity check as Position component is fundamental for the unit's existence
+            assert(getComponent<domain::Position>().find(id) != getComponent<domain::Position>().end());
 
             executeChain(id, std::span<const std::type_index>(maintenanceChain).subspan(1, 1), false);
         }

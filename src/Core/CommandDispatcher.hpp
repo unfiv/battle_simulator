@@ -24,7 +24,7 @@ namespace sw::core
                 world.getEvents().event(world.getTick(), events::MapCreated{command.width, command.height});
             });
 
-            parser.add<commands::March>([&world](auto command)
+            /*parser.add<commands::March>([&world](auto command)
             {
                 // Check if the unit exists in our coordinate table
                 if (auto it = world.positions.find(command.unitId); it != world.positions.end())
@@ -36,7 +36,7 @@ namespace sw::core
 
                     world.getEvents().event(world.getTick(), events::MarchStarted{command.unitId, currentPos.x, currentPos.y, targetPos.x, targetPos.y});
                 }
-            });
+            });*/
 
             // Setup all the custom commands registered
 			commands::CommandRegistry::setupAll(world, parser);
