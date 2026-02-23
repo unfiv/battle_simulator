@@ -54,6 +54,7 @@ int main(int argc, char** argv)
 	using namespace sw::features::systems;
     using namespace sw::features::intents;
 
+	world.resolver.setPlanner<MoveIntent>(MovementSystem::plan);
     world.resolver.setExecutor<MoveIntent>(MovementSystem::execute);
     world.resolver.subscribe<MoveIntent>(MovementSystem::onAfterMove);
 

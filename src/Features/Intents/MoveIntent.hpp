@@ -10,11 +10,10 @@ namespace sw::features::intents
     {
         uint32_t unitId;
 
-        // TODO: migrate to Position struct
-        uint32_t fromX, fromY;
+        core::Position posFrom;
         core::Position posTo;
 
-        MoveIntent(uint32_t id, uint32_t fx, uint32_t fy, core::Position to)
-            : unitId(id), fromX(fx), fromY(fy), posTo(to) {}
+        MoveIntent(uint32_t id, core::Position from, core::Position to)
+            : unitId(id), posFrom(from), posTo(to) {}
     };
 }

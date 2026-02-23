@@ -20,7 +20,7 @@ namespace sw::core::systems
             const Position targetPos = targets[unitId];
             const Position currentPos = world.positions[unitId];
             const Position nextPos = Spatial::getNextStep(currentPos, targetPos);
-            if (Spatial::isPassable(world, nextPos))
+            /*if (Spatial::isPassable(world, nextPos))
             {
                 world.pushIntent(std::make_shared<features::intents::MoveIntent>(
                     unitId,
@@ -28,7 +28,7 @@ namespace sw::core::systems
                     currentPos.y,
                     nextPos
                 ));
-            }
+            }*/
         }
     };
 }
