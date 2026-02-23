@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Core/World.hpp"
+
+#include <algorithm>
+#include "Features/Domain/Effects/EffectData.hpp"
 #include "Features/Domain/Effects/EffectList.hpp"
 #include "Features/Intents/EffectsTickIntent.hpp"
 
@@ -51,11 +54,19 @@ namespace sw::features::systems
                     ++it;
                 }
             }
-        }
 
-        static void addEffect(core::World& world, uint32_t targetId, domain::effects::ActiveEffect effect)
-        {
-            world.getComponent<domain::effects::EffectList>()[targetId].active.push_back(std::move(effect));
+            auto& rendingMap = world.getComponent<domain::effects::RendingEffectData>();
+            const bool hasRending = std::any_of(
+                effectList.active.begin(),
+                effectList.active.end(),
+                [](const domain::effects::ActiveEffect& effect)
+                {
+                    return effect.dataType == std::type_index(typeid(domain::effects::RendingEffectData));
+                });
+            if (!hasRending)
+            {
+                rendingMap.erase(targetId);
+            }
         }
     };
 }

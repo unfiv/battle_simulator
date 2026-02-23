@@ -5,9 +5,6 @@
 
 #include "Core/Domain/Position.hpp"
 
-#include "Features/Intents/DeathIntent.hpp"
-#include "Features/Intents/EffectsTickIntent.hpp"
-
 namespace sw::core
 {
 	void World::nextTick()
@@ -20,11 +17,6 @@ namespace sw::core
         {
             const auto& positions = getComponent<domain::Position>();
             return positions.find(id) != positions.end();
-        };
-
-        const std::array<std::type_index, 2> maintenanceChain = {
-            std::type_index(typeid(features::intents::EffectsTickIntent)),
-            std::type_index(typeid(features::intents::DeathIntent))
         };
 
         auto executeChain = [this](uint32_t id, std::span<const std::type_index> chain, bool stopOnSuccess)
@@ -59,7 +51,7 @@ namespace sw::core
                 continue;
             }
 
-            executeChain(id, maintenanceChain, false);
+            executeChain(id, tickSystemOrder, false);
 
             auto chainIt = intentsChains.find(id);
             if (chainIt == intentsChains.end())
@@ -77,7 +69,7 @@ namespace sw::core
                 continue;
             }
 
-            executeChain(id, std::span<const std::type_index>(maintenanceChain).subspan(1, 1), false);
+            executeChain(id, postTickSystemOrder, false);
         }
 	}
 }

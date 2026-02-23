@@ -17,9 +17,11 @@
 #include "Features/Intents/MeleeAttackIntent.hpp"
 #include "Features/Intents/EffectsTickIntent.hpp"
 #include "Features/Intents/DeathIntent.hpp"
+#include "Features/Intents/AddEffectIntent.hpp"
 
 #include "Features/Systems/MarchSystem.hpp"
 #include "Features/Systems/DamageSystem.hpp"
+#include "Features/Systems/AddEffectExecutor.hpp"
 
 #include <fstream>
 
@@ -52,9 +54,12 @@ int main(int argc, char** argv)
 
 	world.resolver.setPlanner<EffectsTickIntent>(Effects::plan);
     world.resolver.setExecutor<EffectsTickIntent>(Effects::execute);
+	world.registerTickSystem<EffectsTickIntent>();
 
 	world.resolver.setPlanner<DeathIntent>(Death::plan);
     world.resolver.setExecutor<DeathIntent>(Death::execute);
+	world.registerTickSystem<DeathIntent>();
+	world.registerTickSystem<DeathIntent>(true);
 
 	world.resolver.setPlanner<RangedAttackIntent>(RangedAttack::plan);
     world.resolver.setExecutor<RangedAttackIntent>(RangedAttack::execute);
@@ -67,6 +72,7 @@ int main(int argc, char** argv)
     world.resolver.subscribe<MarchIntent>(MarchSystem::onAfterMove);
 
     world.resolver.setExecutor<DamageIntent>(DamageSystem::apply);
+    world.resolver.setExecutor<AddEffectIntent>(AddEffectExecutor::execute);
 
 	parser.parse(file);
 
