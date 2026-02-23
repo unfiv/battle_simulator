@@ -13,9 +13,8 @@
 #include "Features/Domain/RangedAttackable.hpp"
 #include "Features/Domain/PoisonAbility.hpp"
 #include "Features/Events/UnitAbilityUsed.hpp"
-#include "Features/Systems/Damage.hpp"
-#include "Features/Systems/Effects.hpp"
-#include "Features/Systems/Effects/PoisonEffect.hpp"
+#include "Features/Intents/AddEffectIntent.hpp"
+#include "Features/Intents/DamageIntent.hpp"
 #include "Features/Systems/MarchSystem.hpp"
 #include "Features/Intents/RangedAttackIntent.hpp"
 
@@ -104,18 +103,20 @@ namespace sw::features::systems
             {
                 if (dis(gen) <= ability->second.chance)
                 {
-                    // Add poison effect which will deal total 'poison' damage over 5 ticks.
-                    Effects::addEffect(world, targetId, effects::PoisonEffect::create(attackerId, ability->second.poison));
+                    world.pushIntent(std::make_shared<intents::AddEffectIntent>(
+                        attackerId,
+                        targetId,
+                        intents::EffectType::Poison,
+                        5,
+                        ability->second.poison));
                     world.getEvents().event(world.getTick(), events::UnitAbilityUsed{attackerId, "poison"});
-
-                    // Poison substitutes the main ranged damage: do NOT apply immediate fractional damage here.
                     damage = 0;
                 }
             }
 
             if (damage > 0)
             {
-                Damage::apply(world, attackerId, targetId, damage);
+                world.pushIntent(std::make_shared<intents::DamageIntent>(attackerId, targetId, damage, "ranged"));
             }
         }
 

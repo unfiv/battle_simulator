@@ -12,10 +12,9 @@
 #include "Features/Domain/PositionOccupier.hpp"
 #include "Features/Domain/RendingAbility.hpp"
 #include "Features/Events/UnitAbilityUsed.hpp"
+#include "Features/Intents/AddEffectIntent.hpp"
 #include "Features/Intents/DamageIntent.hpp"
 #include "Features/Systems/MarchSystem.hpp"
-#include "Features/Systems/Effects.hpp"
-#include "Features/Systems/Effects/RendingEffect.hpp"
 #include "Features/Intents/MeleeAttackIntent.hpp"
 
 namespace sw::features::systems
@@ -86,7 +85,12 @@ namespace sw::features::systems
                 if (dis(gen) <= ability->second.chance)
                 {
                     damage = ability->second.rending;
-                    Effects::addEffect(world, targetId, effects::RendingEffect::create(attackerId, 0));
+                    world.pushIntent(std::make_shared<intents::AddEffectIntent>(
+                        attackerId,
+                        targetId,
+                        intents::EffectType::Rending,
+                        1,
+                        0));
                     world.getEvents().event(world.getTick(), events::UnitAbilityUsed{attackerId, "rending"});
                 }
             }

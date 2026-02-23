@@ -5,20 +5,13 @@
 #include "Core/World.hpp"
 
 #include "Features/Domain/Effects/EffectData.hpp"
-#include "Features/Domain/Effects/EffectFactory.hpp"
-#include "Features/Systems/Damage.hpp"
-#include "Features/Systems/Effects/EffectQueries.hpp"
+#include "Features/Intents/DamageIntent.hpp"
 
 namespace sw::features::systems::effects
 {
     class PoisonEffect
     {
     public:
-        static domain::effects::ActiveEffect create(uint32_t sourceUnitId, uint32_t totalDamage)
-        {
-            return domain::effects::create(domain::effects::PoisonEffectData{totalDamage, 0}, 5, sourceUnitId, apply);
-        }
-
         static void apply(core::World& world, uint32_t targetId, domain::effects::ActiveEffect& effect)
         {
             constexpr uint32_t kPoisonTicks = 5;
@@ -33,14 +26,14 @@ namespace sw::features::systems::effects
                 ++tickDamage;
             }
 
-            if (hasEffect<domain::effects::RendingEffectData>(world, targetId))
+            if (world.getComponent<domain::effects::RendingEffectData>().contains(targetId))
             {
                 tickDamage *= 2;
             }
 
             if (tickDamage > 0)
             {
-                Damage::apply(world, effect.sourceUnitId, targetId, tickDamage);
+                world.pushIntent(std::make_shared<intents::DamageIntent>(effect.sourceUnitId, targetId, tickDamage, "poison"));
             }
 
             ++data.appliedTicks;

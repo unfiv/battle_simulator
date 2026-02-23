@@ -31,11 +31,25 @@ namespace sw::core
         std::unordered_map<uint32_t, pipeline::IntentChain> intentsChains;
 
         std::vector<uint32_t> creationOrder;
+        std::vector<std::type_index> tickSystemOrder;
+        std::vector<std::type_index> postTickSystemOrder;
         
 
         void pushIntent(std::shared_ptr<pipeline::Intent> intent)
         {
             resolver.resolve(*this, intent);
+        }
+
+        template<typename TIntent>
+        void registerTickSystem(bool postAction = false)
+        {
+            if (postAction)
+            {
+                postTickSystemOrder.emplace_back(typeid(TIntent));
+                return;
+            }
+
+            tickSystemOrder.emplace_back(typeid(TIntent));
         }
 
         template<typename T>
