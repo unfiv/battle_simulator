@@ -32,6 +32,7 @@ namespace sw::core::pipeline
 			}
 			if (current->getCancelled())
 			{
+				executed = true;
 				continue;
 			}
 

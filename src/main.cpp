@@ -17,6 +17,7 @@
 #include "Features/Systems/Effects.hpp"
 #include "Features/Systems/MarchSystem.hpp"
 #include "Features/Systems/MeleeAttack.hpp"
+#include "Features/Systems/Poisoning.hpp"
 #include "Features/Systems/RangedAttack.hpp"
 
 #include <fstream>
@@ -58,6 +59,7 @@ int main(int argc, char** argv)
 	world.registerTickSystem<DeathIntent>(true);
 
 	world.resolver.setPlanner<RangedAttackIntent>(RangedAttack::plan);
+	world.resolver.subscribe<RangedAttackIntent>(Poisoning::onBeforeRangedAttack, false);
 	world.resolver.setExecutor<RangedAttackIntent>(RangedAttack::execute);
 
 	world.resolver.setPlanner<MeleeAttackIntent>(MeleeAttack::plan);

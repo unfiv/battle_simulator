@@ -9,10 +9,10 @@
 #include "Features/Domain/MarchTarget.hpp"
 #include "Features/Domain/Melee.hpp"
 #include "Features/Domain/MeleeAttackable.hpp"
-#include "Features/Domain/PoisonAbility.hpp"
 #include "Features/Domain/PositionOccupier.hpp"
 #include "Features/Domain/Ranged.hpp"
 #include "Features/Domain/RangedAttackable.hpp"
+#include "Features/Domain/RangedPoisoning.hpp"
 #include "Features/Intents/MarchIntent.hpp"
 #include "Features/Intents/MeleeAttackIntent.hpp"
 #include "Features/Intents/RangedAttackIntent.hpp"
@@ -35,7 +35,7 @@ namespace sw::features::commands
 					world.getComponent<domain::Ranged>()[unitId] = {agility, range};
 					world.getComponent<domain::MeleeAttackable>()[unitId];
 					world.getComponent<domain::RangedAttackable>()[unitId];
-					world.getComponent<domain::PoisonAbility>()[unitId] = {chance, poison};
+					world.getComponent<domain::RangedPoisoning>()[unitId] = {chance, poison};
 
 					world.intentsChains[unitId]
 							.add<intents::RangedAttackIntent>()

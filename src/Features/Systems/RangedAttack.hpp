@@ -3,12 +3,9 @@
 #include "Core/Domain/Position.hpp"
 #include "Core/World.hpp"
 #include "Features/Domain/Health.hpp"
-#include "Features/Domain/PoisonAbility.hpp"
 #include "Features/Domain/PositionOccupier.hpp"
 #include "Features/Domain/Ranged.hpp"
 #include "Features/Domain/RangedAttackable.hpp"
-#include "Features/Events/UnitAbilityUsed.hpp"
-#include "Features/Intents/AddEffectIntent.hpp"
 #include "Features/Intents/DamageIntent.hpp"
 #include "Features/Intents/RangedAttackIntent.hpp"
 #include "Features/Systems/MarchSystem.hpp"
@@ -100,32 +97,11 @@ namespace sw::features::systems
 
 		static void execute(core::World& world, intents::RangedAttackIntent& intent)
 		{
-			static std::random_device rd;
-			static std::mt19937 gen(rd());
-			static std::uniform_int_distribution<> dis(1, 1000);
-
 			auto attackerId = intent.attackerId;
 			auto targetId = intent.targetId;
 			auto& ranged = world.getComponent<domain::Ranged>()[attackerId];
-			auto& poisonAbilities = world.getComponent<domain::PoisonAbility>();
 
-			uint32_t damage = ranged.agility;
-			if (auto ability = poisonAbilities.find(attackerId); ability != poisonAbilities.end())
-			{
-				if (dis(gen) <= ability->second.chance)
-				{
-					world.pushIntent(
-							std::make_unique<intents::AddEffectIntent>(
-									attackerId, targetId, intents::EffectType::Poison, 5, ability->second.poison));
-					world.getEvents().event(world.getTick(), events::UnitAbilityUsed{attackerId, targetId, "poison"});
-					damage = 0;
-				}
-			}
-
-			if (damage > 0)
-			{
-				world.pushIntent(std::make_unique<intents::DamageIntent>(attackerId, targetId, damage, "ranged"));
-			}
+			world.pushIntent(std::make_unique<intents::DamageIntent>(attackerId, targetId, ranged.agility, "ranged"));
 		}
 
 		static uint32_t distanceBetweenUnits(core::World& world, uint32_t lhsId, uint32_t rhsId)
