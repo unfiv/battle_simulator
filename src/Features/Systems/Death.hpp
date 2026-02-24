@@ -5,7 +5,6 @@
 #include "Features/Domain/Effects/EffectList.hpp"
 #include "Features/Domain/Health.hpp"
 #include "Features/Domain/Melee.hpp"
-#include "Features/Domain/PoisonAbility.hpp"
 #include "Features/Domain/Ranged.hpp"
 #include "Features/Domain/RendingAbility.hpp"
 #include "Features/Intents/DeathIntent.hpp"
