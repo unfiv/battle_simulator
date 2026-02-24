@@ -71,4 +71,53 @@ namespace sw::core
 			executeChain(id, postTickSystemOrder, false);
 		}
 	}
+
+	bool World::isGameOver()
+	{
+		auto hasPosition = [this](uint32_t id)
+		{
+			const auto& positions = getComponent<domain::Position>();
+			return positions.find(id) != positions.end();
+		};
+
+		auto canPlanAnyIntent = [this](uint32_t id, const std::vector<std::type_index>& chain)
+		{
+			for (const auto& intentType : chain)
+			{
+				auto planner = resolver.getPlanner(intentType);
+				if (!planner)
+				{
+					continue;
+				}
+
+				if (planner(*this, id))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		};
+
+		for (uint32_t id : creationOrder)
+		{
+			if (!hasPosition(id))
+			{
+				continue;
+			}
+
+			if (canPlanAnyIntent(id, tickSystemOrder))
+			{
+				return false;
+			}
+
+			auto chainIt = intentsChains.find(id);
+			if (chainIt != intentsChains.end() && canPlanAnyIntent(id, chainIt->second.get()))
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
