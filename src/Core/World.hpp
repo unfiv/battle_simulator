@@ -27,7 +27,7 @@ namespace sw::core
 		void nextTick();
 
 		bool isGameOver();
-		
+
 		void removeAllComponents(uint32_t id);
 		void pushIntent(std::unique_ptr<pipeline::Intent> intent);
 
@@ -73,7 +73,7 @@ namespace sw::core
 		std::vector<uint32_t> creationOrder;
 
 		std::unordered_map<uint32_t, pipeline::IntentChain> intentsChains;
-		
+
 		std::vector<std::type_index> tickSystemOrder;
 		std::vector<std::type_index> postTickSystemOrder;
 

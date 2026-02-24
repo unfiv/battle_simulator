@@ -59,11 +59,9 @@ namespace sw::features::systems
 
 							for (const auto& [sourceId, damage] : pendingDamageBySource)
 							{
-								world.pushIntent(std::make_unique<intents::DamageIntent>(
-										sourceId,
-										intent.targetId,
-										damage,
-										"poison"));
+								world.pushIntent(
+										std::make_unique<intents::DamageIntent>(
+												sourceId, intent.targetId, damage, "poison"));
 							}
 						}
 					}

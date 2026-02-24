@@ -8,10 +8,9 @@
 
 namespace sw::core
 {
-	World::World(io::EventSystem& events)
-		: eventSystem(events)
-	{
-	}
+	World::World(io::EventSystem& events) :
+			eventSystem(events)
+	{}
 
 	uint32_t World::getTick() const
 	{

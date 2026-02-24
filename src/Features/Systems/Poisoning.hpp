@@ -34,8 +34,9 @@ namespace sw::features::systems
 			}
 
 			intent.cancel("ranged_poisoning");
-			world.pushIntent(std::make_unique<intents::AddEffectIntent>(
-					attackerId, targetId, intents::EffectType::Poison, 5, ability->second.poison));
+			world.pushIntent(
+					std::make_unique<intents::AddEffectIntent>(
+							attackerId, targetId, intents::EffectType::Poison, 5, ability->second.poison));
 			world.getEvents().event(world.getTick(), events::UnitAbilityUsed{attackerId, targetId, "poison"});
 		}
 	};
