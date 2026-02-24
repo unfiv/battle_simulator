@@ -98,10 +98,7 @@ namespace sw::core
 			return intentsChains[id];
 		}
 
-		bool isGameOver() const
-		{
-			return tick > 100;
-		}
+		bool isGameOver();
 
 	private:
 		uint32_t tick{0};
