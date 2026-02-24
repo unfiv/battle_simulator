@@ -1,8 +1,8 @@
 #pragma once
 
-#include <cstdint>
-
 #include "Core/Commands/ICommand.hpp"
+
+#include <cstdint>
 
 namespace sw::features::commands
 {
@@ -18,7 +18,7 @@ namespace sw::features::commands
 		uint32_t chance{};
 		uint32_t rending{};
 
-		void execute(core::World& world) const override;		
+		void execute(core::World& world) const override;
 
 		template <typename Visitor>
 		void visit(Visitor& visitor)

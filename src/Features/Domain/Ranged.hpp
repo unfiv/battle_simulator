@@ -4,9 +4,9 @@
 
 namespace sw::features::domain
 {
-    struct Ranged
-    {
-        uint32_t agility{};
-        uint32_t range{};
-    };
+	struct Ranged
+	{
+		uint32_t agility{};
+		uint32_t range{};
+	};
 }

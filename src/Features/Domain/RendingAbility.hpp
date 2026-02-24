@@ -4,9 +4,9 @@
 
 namespace sw::features::domain
 {
-    struct RendingAbility
-    {
-        uint32_t chance{};
-        uint32_t rending{};
-    };
+	struct RendingAbility
+	{
+		uint32_t chance{};
+		uint32_t rending{};
+	};
 }

@@ -1,13 +1,13 @@
 #pragma once
 
-#include <vector>
-
 #include "Features/Domain/Effects/ActiveEffect.hpp"
+
+#include <vector>
 
 namespace sw::features::domain::effects
 {
-    struct EffectList
-    {
-        std::vector<ActiveEffect> active;
-    };
+	struct EffectList
+	{
+		std::vector<ActiveEffect> active;
+	};
 }

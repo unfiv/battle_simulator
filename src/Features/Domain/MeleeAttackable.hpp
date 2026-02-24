@@ -2,5 +2,6 @@
 
 namespace sw::features::domain
 {
-    struct MeleeAttackable {};
+	struct MeleeAttackable
+	{};
 }

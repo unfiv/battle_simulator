@@ -4,20 +4,20 @@
 
 namespace sw::features::events
 {
-    struct MarchEnded
-    {
-        constexpr static const char* Name = "MARCH_ENDED";
+	struct MarchEnded
+	{
+		constexpr static const char* Name = "MARCH_ENDED";
 
-        uint32_t unitId{};
-        uint32_t x{};
-        uint32_t y{};
+		uint32_t unitId{};
+		uint32_t x{};
+		uint32_t y{};
 
-        template <typename Visitor>
-        void visit(Visitor& visitor)
-        {
-            visitor.visit("unitId", unitId);
-            visitor.visit("x", x);
-            visitor.visit("y", y);
-        }
-    };
+		template <typename Visitor>
+		void visit(Visitor& visitor)
+		{
+			visitor.visit("unitId", unitId);
+			visitor.visit("x", x);
+			visitor.visit("y", y);
+		}
+	};
 }

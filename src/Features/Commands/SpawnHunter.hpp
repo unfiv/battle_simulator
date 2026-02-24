@@ -1,8 +1,8 @@
 #pragma once
 
-#include <cstdint>
-
 #include "Core/Commands/ICommand.hpp"
+
+#include <cstdint>
 
 namespace sw::features::commands
 {

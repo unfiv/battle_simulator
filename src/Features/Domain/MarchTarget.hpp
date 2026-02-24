@@ -4,8 +4,8 @@
 
 namespace sw::features::domain
 {
-    struct MarchTarget
-    {
-        core::domain::Position position;
-    };
+	struct MarchTarget
+	{
+		core::domain::Position position;
+	};
 }

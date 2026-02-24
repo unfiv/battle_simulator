@@ -4,10 +4,9 @@
 
 namespace sw::features::domain
 {
-    struct PoisonAbility
-    {
-        uint32_t chance{};
-        uint32_t poison{};
-    };
+	struct PoisonAbility
+	{
+		uint32_t chance{};
+		uint32_t poison{};
+	};
 }
-

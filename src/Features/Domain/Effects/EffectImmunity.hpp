@@ -2,7 +2,6 @@
 
 namespace sw::features::domain::effects
 {
-    struct EffectImmunity
-    {
-    };
+	struct EffectImmunity
+	{};
 }

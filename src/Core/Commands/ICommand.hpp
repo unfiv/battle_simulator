@@ -2,14 +2,14 @@
 
 namespace sw::core
 {
-    class World;
+	class World;
 }
 
 namespace sw::core::commands
 {
-    struct ICommand
-    {
-        virtual ~ICommand() = default;
-        virtual void execute(sw::core::World& world) const = 0;
-    };
+	struct ICommand
+	{
+		virtual ~ICommand() = default;
+		virtual void execute(sw::core::World& world) const = 0;
+	};
 }
