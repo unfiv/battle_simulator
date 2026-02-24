@@ -40,7 +40,6 @@ namespace sw::core::pipeline
 			return (it != registry.end()) ? it->second.planner : nullptr;
 		}
 
-		bool resolve(World& world);
 		bool resolve(World& world, std::unique_ptr<Intent> intent);
 
 		template <typename TIntent>
